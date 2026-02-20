@@ -1,0 +1,782 @@
+/**
+ * Pudge Wars - Стили клиентского интерфейса
+ */
+
+/* ============================================
+   Базовые стили
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* ============================================
+   Экраны
+   ============================================ */
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screen.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============================================
+   Контейнеры
+   ============================================ */
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.container.full-width {
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   Заголовки
+   ============================================ */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+}
+
+/* ============================================
+   Формы
+   ============================================ */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4ECDC4;
+  box-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group select option {
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+/* ============================================
+   Кнопки
+   ============================================ */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4ECDC4 0%, #44a08d 100%);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5dd6cd 0%, #55b099 100%);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #FF6B6B 0%, #ee5a5a 100%);
+  color: #ffffff;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #FFD93D 0%, #f0c020 100%);
+  color: #1a1a2e;
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.btn-large {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   Статус
+   ============================================ */
+.status {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  display: none;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.error {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid #FF6B6B;
+  color: #FF6B6B;
+}
+
+.status.success {
+  background: rgba(78, 205, 196, 0.2);
+  border: 1px solid #4ECDC4;
+  color: #4ECDC4;
+}
+
+.status.info {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   Лобби
+   ============================================ */
+.lobby-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.lobby-header h1 {
+  text-align: left;
+  font-size: 2rem;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#lobby-player-name {
+  font-weight: 600;
+  color: #4ECDC4;
+}
+
+.lobby-content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 30px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ============================================
+   Список комнат
+   ============================================ */
+.rooms-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.panel-header h2 {
+  margin-bottom: 0;
+  font-size: 1.3rem;
+}
+
+.rooms-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rooms-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rooms-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.rooms-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.room-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.room-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #4ECDC4;
+  transform: translateX(5px);
+}
+
+.room-item-info {
+  flex: 1;
+}
+
+.room-item-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.room-item-details {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.room-item-players {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  background: #4ECDC4;
+  color: #1a1a2e;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.room-item-state {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.room-item-state.lobby {
+  background: #4ECDC4;
+  color: #1a1a2e;
+}
+
+.room-item-state.countdown {
+  background: #FFD93D;
+  color: #1a1a2e;
+}
+
+.room-item-state.playing {
+  background: #FF6B6B;
+  color: #ffffff;
+}
+
+.empty-message {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 40px;
+}
+
+/* ============================================
+   Создание комнаты
+   ============================================ */
+.create-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+  height: fit-content;
+}
+
+.create-panel h2 {
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   Экран комнаты
+   ============================================ */
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.room-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.room-info h2 {
+  margin-bottom: 0;
+}
+
+.room-content {
+  display: flex;
+  gap: 30px;
+  flex: 1;
+}
+
+.players-panel {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.player-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.player-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.player-role {
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.player-role.host {
+  background: #FFD93D;
+  color: #1a1a2e;
+}
+
+.host-controls {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.waiting-message {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.countdown-display {
+  text-align: center;
+  padding: 30px;
+}
+
+#countdown-number {
+  font-size: 8rem;
+  font-weight: 700;
+  color: #4ECDC4;
+  text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ============================================
+   Игровой экран
+   ============================================ */
+#game-screen {
+  background: #0a0a15;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* HUD */
+.game-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.hud-left,
+.hud-right {
+  pointer-events: auto;
+}
+
+/* Здоровье */
+.health-bar-container {
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+.health-bar {
+  height: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.health-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
+  transition: width 0.3s ease-out;
+}
+
+.health-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Перезарядка хука */
+.cooldown-container {
+  width: 150px;
+}
+
+.cooldown-bar {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.cooldown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD93D 0%, #FF6B6B 100%);
+  transition: width 0.1s linear;
+}
+
+.cooldown-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Таймер */
+.hud-center {
+  text-align: center;
+}
+
+.game-timer {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.game-message {
+  font-size: 1.2rem;
+  color: #4ECDC4;
+  margin-top: 5px;
+  min-height: 1.5em;
+}
+
+/* Статистика */
+.stats-box {
+  display: flex;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px 25px;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4ECDC4;
+}
+
+/* ============================================
+   Экран смерти
+   ============================================ */
+.death-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px 60px;
+  border-radius: 20px;
+  border: 2px solid #FF6B6B;
+}
+
+.death-screen h2 {
+  font-size: 2.5rem;
+  color: #FF6B6B;
+  margin-bottom: 15px;
+}
+
+.death-screen p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#respawn-timer {
+  color: #4ECDC4;
+  font-weight: 700;
+}
+
+/* ============================================
+   Экран конца игры
+   ============================================ */
+.gameover-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameover-screen.show {
+  display: flex;
+}
+
+.gameover-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gameover-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.winner-display {
+  font-size: 1.5rem;
+  color: #FFD93D;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(255, 217, 61, 0.1);
+  border-radius: 10px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table th {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table tr:first-child td {
+  color: #FFD93D;
+  font-weight: 600;
+}
+
+.leaderboard-table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   Кнопка выхода
+   ============================================ */
+.exit-game-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+/* ============================================
+   Утилиты
+   ============================================ */
+.hidden {
+  display: none !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    width: 95%;
+  }
+  
+  .lobby-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .create-panel {
+    order: -1;
+  }
+  
+  .lobby-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .lobby-header h1 {
+    text-align: center;
+  }
+  
+  .hud-left,
+  .hud-right {
+    display: none;
+  }
+}

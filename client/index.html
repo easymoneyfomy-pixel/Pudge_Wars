@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pudge Wars - Multiplayer Hook Game</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Главный контейнер -->
+  <div id="app">
+    
+    <!-- Экран подключения -->
+    <div id="connect-screen" class="screen active">
+      <div class="container">
+        <h1>🎮 Pudge Wars</h1>
+        <p class="subtitle">Real-time Multiplayer Hook Battle</p>
+        
+        <div class="form-group">
+          <label for="player-name">Your Name</label>
+          <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+        </div>
+        
+        <div class="form-group">
+          <label for="server-url">Server URL</label>
+          <input type="text" id="server-url" value="ws://localhost:3000" placeholder="ws://localhost:3000">
+        </div>
+        
+        <button id="connect-btn" class="btn btn-primary">Connect to Server</button>
+        
+        <div id="connect-status" class="status"></div>
+      </div>
+    </div>
+    
+    <!-- Экран лобби -->
+    <div id="lobby-screen" class="screen">
+      <div class="container full-width">
+        <header class="lobby-header">
+          <h1>🎮 Pudge Wars</h1>
+          <div class="player-info">
+            <span id="lobby-player-name"></span>
+            <button id="disconnect-btn" class="btn btn-small btn-danger">Disconnect</button>
+          </div>
+        </header>
+        
+        <div class="lobby-content">
+          <!-- Список комнат -->
+          <div class="rooms-panel">
+            <div class="panel-header">
+              <h2>Available Rooms</h2>
+              <button id="refresh-rooms-btn" class="btn btn-small">🔄 Refresh</button>
+            </div>
+            
+            <div id="rooms-list" class="rooms-list">
+              <div class="empty-message">Loading rooms...</div>
+            </div>
+          </div>
+          
+          <!-- Создание комнаты -->
+          <div class="create-panel">
+            <h2>Create Room</h2>
+            
+            <div class="form-group">
+              <label for="room-name">Room Name</label>
+              <input type="text" id="room-name" placeholder="My Awesome Room" maxlength="30">
+            </div>
+            
+            <div class="form-group">
+              <label for="max-players">Max Players</label>
+              <select id="max-players">
+                <option value="2">2 players</option>
+                <option value="4" selected>4 players</option>
+                <option value="6">6 players</option>
+                <option value="8">8 players</option>
+                <option value="10">10 players</option>
+              </select>
+            </div>
+            
+            <button id="create-room-btn" class="btn btn-primary">Create Room</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Экран комнаты -->
+    <div id="room-screen" class="screen">
+      <div class="container full-width">
+        <header class="room-header">
+          <div class="room-info">
+            <h2 id="room-name-display">Room Name</h2>
+            <span id="room-players-count" class="badge">0/10</span>
+          </div>
+          <button id="leave-room-btn" class="btn btn-danger">Leave Room</button>
+        </header>
+        
+        <div class="room-content">
+          <!-- Список игроков -->
+          <div class="players-panel">
+            <h3>Players</h3>
+            <div id="room-players-list" class="players-list">
+              <!-- Игроки будут добавлены здесь -->
+            </div>
+            
+            <!-- Кнопка старта для хоста -->
+            <div id="host-controls" class="host-controls hidden">
+              <button id="start-game-btn" class="btn btn-primary btn-large">
+                🎮 Start Game
+              </button>
+              <button id="cancel-start-btn" class="btn btn-warning btn-large hidden">
+                ❌ Cancel
+              </button>
+            </div>
+            
+            <!-- Индикатор ожидания -->
+            <div id="waiting-message" class="waiting-message hidden">
+              <p>Waiting for host to start...</p>
+            </div>
+            
+            <!-- Индикатор отсчёта -->
+            <div id="countdown-display" class="countdown-display hidden">
+              <span id="countdown-number">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Игровой экран -->
+    <div id="game-screen" class="screen">
+      <canvas id="game-canvas"></canvas>
+      
+      <!-- HUD -->
+      <div id="game-hud" class="game-hud">
+        <!-- Левая панель: здоровье и хук -->
+        <div class="hud-left">
+          <div class="health-bar-container">
+            <div class="health-bar">
+              <div id="player-hp-bar" class="health-fill" style="width: 100%"></div>
+            </div>
+            <span id="player-hp-text" class="health-text">100/100</span>
+          </div>
+          
+          <div class="cooldown-container">
+            <div id="hook-cooldown-bar" class="cooldown-bar">
+              <div class="cooldown-fill" style="width: 0%"></div>
+            </div>
+            <span class="cooldown-text">HOOK</span>
+          </div>
+        </div>
+        
+        <!-- Центр: таймер и счёт -->
+        <div class="hud-center">
+          <div id="game-timer" class="game-timer">00:00</div>
+          <div id="game-message" class="game-message"></div>
+        </div>
+        
+        <!-- Правая панель: статистика -->
+        <div class="hud-right">
+          <div class="stats-box">
+            <div class="stat">
+              <span class="stat-label">K</span>
+              <span id="stat-kills" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">D</span>
+              <span id="stat-deaths" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">H</span>
+              <span id="stat-hooks" class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Экран смерти -->
+      <div id="death-screen" class="death-screen hidden">
+        <h2>💀 You Died!</h2>
+        <p>Respawning in <span id="respawn-timer">3</span>s...</p>
+      </div>
+      
+      <!-- Экран конца игры -->
+      <div id="gameover-screen" class="gameover-screen hidden">
+        <div class="gameover-content">
+          <h2 id="gameover-title">Game Over</h2>
+          <div id="gameover-winner" class="winner-display"></div>
+          
+          <h3>Leaderboard</h3>
+          <table id="leaderboard-table" class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>K</th>
+                <th>D</th>
+                <th>Hooks</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Таблица лидеров -->
+            </tbody>
+          </table>
+          
+          <button id="back-to-lobby-btn" class="btn btn-primary btn-large">
+            Back to Lobby
+          </button>
+        </div>
+      </div>
+      
+      <!-- Кнопка выхода из игры -->
+      <button id="exit-game-btn" class="btn btn-small btn-danger exit-game-btn">
+        Exit
+      </button>
+    </div>
+    
+  </div>
+  
+  <!-- Подключение скриптов -->
+  <script src="js/Network.js"></script>
+  <script src="js/Input.js"></script>
+  <script src="js/Renderer.js"></script>
+  <script src="js/Game.js"></script>
+  <script src="js/UI.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
