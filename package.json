@@ -5,7 +5,9 @@
   "main": "server/src/index.js",
   "scripts": {
     "start": "node server/src/index.js",
-    "dev": "nodemon server/src/index.js"
+    "start:http": "node server/http-server.js",
+    "dev": "nodemon server/src/index.js",
+    "render": "node server/http-server.js"
   },
   "keywords": ["game", "multiplayer", "websocket", "canvas"],
   "author": "",

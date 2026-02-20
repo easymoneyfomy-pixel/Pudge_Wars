@@ -1,0 +1,21 @@
+# Koyeb Configuration
+# https://www.koyeb.com
+
+# Развёртывание:
+# 1. Перейдите на https://app.koyeb.com/auth/signup
+# 2. Sign up через GitHub
+# 3. New App → Deploy from GitHub
+# 4. Выберите репозиторий Pudge_Wars
+# 5. Koyeb автоматически обнаружит package.json
+
+# Настройки:
+# - Build command: npm install
+# - Start command: npm start
+# - Port: 3000
+# - Instance type: Free (Nano)
+
+# Бесплатно:
+# - 512 MB RAM
+# - 0.1 CPU
+# - 2 GB storage
+# - WebSocket поддерживается ✅

@@ -5,9 +5,11 @@ services:
     region: oregon
     plan: free
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server/http-server.js
     envVars:
       - key: NODE_VERSION
         value: 22.22.0
       - key: PORT
         value: 3000
+      - key: HOST
+        value: 0.0.0.0
