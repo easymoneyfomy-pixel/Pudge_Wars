@@ -14,23 +14,22 @@ npm start
 
 ### Развёртывание (Бесплатно)
 
-**Railway (рекомендуется):**
-```bash
-npm install -g @railway/cli
-railway login
-railway init
-railway up
-```
+**⚠️ Render Free НЕ работает** (блокирует WebSocket)
 
-**Fly.io:**
-```bash
-curl -L https://fly.io/install.sh | sh
-fly auth login
-fly launch --name pudge-wars
-fly deploy
-```
+**✅ Используйте Koyeb (без карты):**
 
-📖 Подробнее: [QUICK_DEPLOY.md](QUICK_DEPLOY.md)
+1. https://app.koyeb.com/auth/signup
+2. New App → Deploy from GitHub
+3. Build: `npm install`, Start: `npm start`, Port: `3000`
+4. Deploy!
+
+**✅ Или Northflank (2 сервиса):**
+
+1. https://northflank.com
+2. New Project → Import from Git
+3. Build: `npm install`, Start: `npm start`
+
+📖 Подробнее: [PLATFORMS.md](PLATFORMS.md)
 
 ## 📋 Особенности
 
