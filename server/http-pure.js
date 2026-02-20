@@ -572,7 +572,19 @@ class GameServer {
   }
 
   serveFile(filename, res) {
-    const filePath = path.join(__dirname, '..', filename);
+    // Исправляем путь для клиентских файлов
+    let filePath;
+    if (filename.startsWith('client/')) {
+      // Уже полный путь
+      filePath = path.join(__dirname, '..', filename);
+    } else if (filename === 'index-http.html') {
+      // Главный файл клиента
+      filePath = path.join(__dirname, '..', 'client', 'index-http.html');
+    } else {
+      // Ищем в папке client
+      filePath = path.join(__dirname, '..', 'client', filename);
+    }
+    
     const ext = path.extname(filePath);
     const mimeTypes = {
       '.html': 'text/html',
@@ -586,6 +598,7 @@ class GameServer {
 
     fs.readFile(filePath, (err, content) => {
       if (err) {
+        console.error(`File not found: ${filePath}`);
         res.writeHead(404);
         res.end('File not found: ' + filename);
         return;
