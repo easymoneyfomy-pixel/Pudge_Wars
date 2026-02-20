@@ -77,9 +77,9 @@ class HTTPServer {
     } else if (pathname === '/api/rooms' && req.method === 'GET') {
       this.handleGetRooms(req, res);
     } else if (pathname.startsWith('/client/')) {
-      this.serveClient(pathname, res);
+      this.serveClient(pathname, res, 'http');
     } else if (pathname === '/' || pathname === '/client') {
-      this.serveClient('/client/index.html', res);
+      this.serveClient('/client/index-http.html', res, 'http');
     } else {
       res.writeHead(404);
       res.end('Not Found');
@@ -259,10 +259,17 @@ class HTTPServer {
   }
   
   // Статический клиент
-  serveClient(pathname, res) {
-    const filePath = path.join(__dirname, '../client', pathname);
-    const ext = path.extname(filePath);
+  serveClient(pathname, res, mode = 'ws') {
+    // Для HTTP режима используем index-http.html
+    let filePath;
+    if (mode === 'http' && pathname === '/client/index.html') {
+      filePath = path.join(__dirname, '../client/index-http.html');
+    } else {
+      filePath = path.join(__dirname, '../client', pathname);
+    }
     
+    const ext = path.extname(filePath);
+
     const mimeTypes = {
       '.html': 'text/html',
       '.css': 'text/css',
@@ -271,14 +278,14 @@ class HTTPServer {
       '.jpg': 'image/jpeg',
       '.svg': 'image/svg+xml'
     };
-    
+
     fs.readFile(filePath, (err, content) => {
       if (err) {
         res.writeHead(404);
         res.end('File not found');
         return;
       }
-      
+
       res.setHeader('Content-Type', mimeTypes[ext] || 'text/plain');
       res.writeHead(200);
       res.end(content);
