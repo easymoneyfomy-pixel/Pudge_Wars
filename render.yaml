@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: pudge-wars
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: PORT
+        value: 3000

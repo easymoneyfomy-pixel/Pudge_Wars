@@ -4,7 +4,7 @@
 module.exports = {
   // Сетевые настройки
   PORT: process.env.PORT || 3000,
-  HOST: '0.0.0.0',
+  HOST: process.env.HOST || '0.0.0.0',
   
   // Настройки игры
   GAME: {

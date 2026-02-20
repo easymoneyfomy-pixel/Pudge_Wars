@@ -243,11 +243,18 @@ class UI {
    */
   async handleConnect() {
     const name = this.connectElements.nameInput.value.trim() || 'Player';
-    const serverUrl = this.connectElements.serverInput.value.trim() || 'ws://localhost:3000';
+    let serverUrl = this.connectElements.serverInput.value.trim();
     
+    // Авто-определение URL сервера
+    if (!serverUrl) {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.host || 'localhost:3000';
+      serverUrl = `${protocol}//${host}`;
+    }
+
     this.setConnectButtonLoading(true);
     this.showStatus('Connecting...', 'info');
-    
+
     try {
       await this.network.connect(serverUrl, name);
       this.showStatus('Connected!', 'success');

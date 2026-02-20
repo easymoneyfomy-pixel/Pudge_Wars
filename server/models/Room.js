@@ -3,9 +3,10 @@
  * Управляет состоянием игры в конкретной комнате
  */
 const { v4: uuidv4 } = require('uuid');
-const Player = require('../models/Player');
-const PhysicsEngine = require('../physics/PhysicsEngine');
-const config = require('../config');
+const path = require('path');
+const Player = require(path.join(__dirname, 'Player'));
+const PhysicsEngine = require(path.join(__dirname, '../physics/PhysicsEngine'));
+const config = require(path.join(__dirname, '../config'));
 
 // Состояния комнаты
 const RoomState = {

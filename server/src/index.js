@@ -4,10 +4,11 @@
  */
 
 const WebSocket = require('ws');
-const config = require('./config');
-const RoomManager = require('./managers/RoomManager');
-const PlayerManager = require('./managers/PlayerManager');
-const MessageHandler = require('./handlers/MessageHandler');
+const path = require('path');
+const config = require(path.join(__dirname, '../../server/config'));
+const RoomManager = require(path.join(__dirname, '../managers/RoomManager'));
+const PlayerManager = require(path.join(__dirname, '../managers/PlayerManager'));
+const MessageHandler = require(path.join(__dirname, '../handlers/MessageHandler'));
 
 class GameServer {
   constructor() {

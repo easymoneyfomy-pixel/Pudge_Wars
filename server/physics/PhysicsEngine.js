@@ -2,7 +2,8 @@
  * Физический движок
  * Обработка коллизий и физических взаимодействий
  */
-const config = require('../config');
+const path = require('path');
+const config = require(path.join(__dirname, '../config'));
 
 class PhysicsEngine {
   constructor() {

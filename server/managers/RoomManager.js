@@ -2,8 +2,9 @@
  * Менеджер комнат
  * Управление созданием, поиском и удалением комнат
  */
-const { Room, RoomState } = require('./Room');
-const config = require('../config');
+const path = require('path');
+const { Room, RoomState } = require(path.join(__dirname, '../models/Room'));
+const config = require(path.join(__dirname, '../config'));
 
 class RoomManager {
   constructor() {

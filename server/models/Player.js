@@ -3,7 +3,8 @@
  * Управляет состоянием и действиями игрока
  */
 const { v4: uuidv4 } = require('uuid');
-const config = require('../config');
+const path = require('path');
+const config = require(path.join(__dirname, '../config'));
 
 class Player {
   constructor(id, name, socket) {

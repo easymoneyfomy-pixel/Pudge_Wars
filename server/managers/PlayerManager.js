@@ -2,7 +2,8 @@
  * Менеджер игроков
  * Глобальное управление подключёнными игроками
  */
-const Player = require('../models/Player');
+const path = require('path');
+const Player = require(path.join(__dirname, '../models/Player'));
 
 class PlayerManager {
   constructor() {
